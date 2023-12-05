@@ -6,7 +6,37 @@
 */
 
 function calculateTotalSpentByCategory(transactions) {
-  return [];
+  let reportArray = [];
+
+  for (let i = 0; i < transactions.length; i++) {
+    if (reportArray.length == 0) {
+      reportArray.push({
+        category: transactions[i]["category"],
+        totalSpent: transactions[i]["price"],
+      });
+    } else if (
+      containsCategory(reportArray, transactions[i]["category"]) != -1
+    ) {
+      reportArray[containsCategory(reportArray, transactions[i]["category"])][
+        "totalSpent"
+      ] += transactions[i]["price"];
+    } else {
+      reportArray.push({
+        category: transactions[i]["category"],
+        totalSpent: transactions[i]["price"],
+      });
+    }
+  }
+
+  return reportArray;
 }
 
+function containsCategory(report, categoryName) {
+  for (let i = 0; i < report.length; i++) {
+    if (report[i]["category"] === categoryName) {
+      return i;
+    }
+  }
+  return -1;
+}
 module.exports = calculateTotalSpentByCategory;

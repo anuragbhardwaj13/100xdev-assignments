@@ -16,6 +16,59 @@
   Once you've implemented the logic, test your code by running
 */
 
-class Calculator {}
+class Calculator {
+  result = 0;
+  constructor(result) {
+    this.result = 0;
+  }
+  add(num) {
+    this.result += num;
+  }
+  subtract(num) {
+    this.result -= num;
+  }
+  multiply(num) {
+    this.result *= num;
+  }
+  divide(num) {
+    try {
+      if (num === 0) {
+        throw err;
+      } else {
+        this.result /= num;
+      }
+    } catch (err) {
+      throw err;
+    }
+  }
+  clear() {
+    this.result = 0;
+  }
+  getResult() {
+    return this.result;
+  }
+  calculate(str) {
+    this.clear();
+
+    str = str.replace(/\s/g, "");
+
+    if (!/^[0-9\s+\-*/().]+$/.test(str)) {
+      throw new Error(
+        "Invalid input: Contains non-numeric or invalid characters"
+      );
+    }
+
+    try {
+      let result = eval(str);
+      if (isNaN(result) || !isFinite(result)) {
+        throw new Error("Invalid input: Unable to evaluate the expression");
+      }
+
+      return (this.result = result); //everything was good
+    } catch (error) {
+      throw new Error("Invalid input: Unable to evaluate the expression");
+    }
+  }
+}
 
 module.exports = Calculator;
